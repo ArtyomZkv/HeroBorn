@@ -8,68 +8,58 @@ public class LearningCurve : MonoBehaviour
     public bool pureOfHeart;
     public bool hasSecretIncantation;
     public string rareItem;
+    private Transform camTransform;
+    public GameObject directionLight;
+    private Transform lightTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-        int currentMoney = 20;
+        Character hero = new Character("Sniper", 15);
+        hero.PrintStatsInfo();
 
-        Dictionary<string, int> itemInventary = new Dictionary<string, int>()
-        {
-            { "M4A1", 5 },
-            { "Tactical knife", 3},
-            { "Bazooka", 10 }
-        };
+        Character heroine = new Character("Agatha", 0);
+        heroine.PrintStatsInfo();
 
-        Dictionary<string, int> deletedItems = new Dictionary<string, int>();
+        Weapon hungtingBowKnight = new Weapon("Hunting Bow Knight", 150);
+        hungtingBowKnight.PrintWeaponsStats();
 
-       // itemInventary.Add("Throwing knife", 3);
+        Character hero2 = new Character("hero2=hero");
+        hero2.PrintStatsInfo();
+        hero2 = hero;
+        hero2.PrintStatsInfo();
+        hero2.name = "Minion";
+        hero2.PrintStatsInfo();
 
-        foreach (KeyValuePair <string, int> kvp in itemInventary)
-        {
-            if (currentMoney >= kvp.Value)
-            {
-                currentMoney -= kvp.Value;
-                deletedItems.Add(kvp.Key, kvp.Value);
-                Debug.Log($"{kvp.Key} added to your inventory!");
-            }
-        }
-        Debug.Log(deletedItems.Count);
+        hero2.name = "Keks";
+        hero2.PrintStatsInfo();
 
-        Debug.Log(CheckToDeletedItems(itemInventary, deletedItems));
+        hero.PrintStatsInfo();
+
+        Weapon huntingBow1 = new Weapon("Hunting Bow", 7);
+        Weapon warBow = hungtingBowKnight;
+
+        huntingBow1.PrintWeaponsStats();
+        warBow.PrintWeaponsStats();
+
+        warBow.name = "peaceBow";
+        warBow.PrintWeaponsStats();
+
+        Paladin knight = new Paladin("Knight Arthas", hungtingBowKnight);
+        knight.PrintStatsInfo();
+
+        camTransform = this.GetComponent<Transform>();
+        Debug.Log(camTransform.localPosition);
+
+        //directionLight = GameObject.Find("Directional Light");
+
+        lightTransform = directionLight.GetComponent<Transform>();
+        Debug.Log(lightTransform.localPosition);
     }
-
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-
-    public int CheckToDeletedItems(Dictionary<string, int> itemInventary, Dictionary<string, int> deletedItems)
-    {
-        int countOfItemInventary = itemInventary.Count;
-        int countOfDeletedItems = deletedItems.Count;
-        int i = 0;
-        try
-        {
-                for (int i_deleted = 0; i_deleted < countOfDeletedItems; i_deleted++)
-                {
-                    if (itemInventary.Keys.ElementAt(i) == deletedItems.Keys.ElementAt(i_deleted))
-                    {
-                        itemInventary.Remove(itemInventary.Keys.ElementAt(i));
-                        i = 0;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-        }
-        catch
-        {
-            
-        }
-        return itemInventary.Count;
     }
 }
